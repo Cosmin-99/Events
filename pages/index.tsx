@@ -1,10 +1,13 @@
 import { NextPage } from "next";
+import { EventList } from "../components/events/event-list/event-list";
+import { getFeaturedEvents } from "../utils/utils";
 
 const HomePage: NextPage = () => {
+    const featuredEvents = getFeaturedEvents();
 
     return (
         <div>
-            <h1>Home page</h1>
+            <EventList events={featuredEvents} />
         </div>
     )
 }

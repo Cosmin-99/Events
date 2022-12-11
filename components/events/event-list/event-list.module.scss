@@ -1,0 +1,9 @@
+@mixin event-list-element($name: ".list") {
+    #{$name} {
+        width: 90%;
+        max-width: 40rem;
+        margin: 5rem auto;
+    }
+}
+
+@include event-list-element();
