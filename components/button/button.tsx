@@ -2,11 +2,19 @@ import Link from "next/link";
 import styles from "./button.module.scss";
 
 export function Button(props: {
-    children: JSX.Element[]
-    link: string
+    children: string | JSX.Element | JSX.Element[]
+    link?: string
+    onClick?: () => void
 }) {
-    const { link, children } = props;
+    const { link, children, onClick } = props;
+
+    if (link) {
+        return (
+            <Link href={link} className={styles.btn}>{children}</Link>
+        )
+    }
+
     return (
-        <Link href={link} className={styles.btn}>{children}</Link>
+        <button className={styles.btn} onClick={onClick}>{children}</button>
     )
 }
