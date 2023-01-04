@@ -1,30 +1,37 @@
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { EventList } from "../../components/events/event-list/event-list";
-import { getFilteredEvents } from "../../utils/utils";
+import { Event, getFilteredEvents } from "../../utils/utils";
 
-const FilteredEventsPage = () => {
+export const getServerSideProps: GetServerSideProps<{ events: Event[] }> = async (context) => {
 
-    const { query } = useRouter();
+    const { params } = context;
 
-    const filterData = query.slug;
-    
-    if (!filterData) {
-        return <p className="center">Loading...</p>
-    }
+    const filterData = params?.slug as string[];
 
     const filteredYear = +filterData[0];
     const filteredMonth = +filterData[1];
 
     if (isNaN(filteredMonth) || isNaN(filteredYear)) {
-        return (
-            <p>Invalid filter. Please adjust your values</p>
-        )
+        return {
+            notFound: true,
+        }
     }
 
-    const events = getFilteredEvents({
+    const events = await getFilteredEvents({
         year: filteredYear,
         month: filteredMonth
     });
+
+    return {
+        props: {
+            events,
+        }
+    }
+
+}
+
+const FilteredEventsPage = ({ events }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     if (!events || events.length === 0) {
         return (

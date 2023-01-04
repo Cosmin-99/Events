@@ -1,19 +1,39 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { Fragment } from "react";
 import EventContent from "../../components/events/event-detail/event-content/event-content";
 import EventLogistics from "../../components/events/event-detail/event-logistic/event-logistics";
 import EventSummary from "../../components/events/event-detail/event-summary/event-summary";
-import { getEventById } from "../../utils/utils";
+import { Event, getEventById, getFeaturedEvents } from "../../utils/utils";
 
-const EventDetailPage: NextPage = () => {
+export const getStaticProps: GetStaticProps<{ event?: Event }> = async (context) => {
+    const eventId = context?.params?.eventId as string;
+    const event = await getEventById(eventId);
 
-    const { query } = useRouter();
-    const eventId = query.eventId as string;
-    const event = getEventById(eventId);
+    return {
+        props: {
+            event,
+        },
+        revalidate: 1800,
+    }
+}
+
+export const getStaticPaths: GetStaticPaths<{ eventId: string }> = async () => {
+    const events = await getFeaturedEvents();
+
+    const dynamicPaths = events.map((event) => ({
+        params: { eventId: event.id },
+    }));
+
+    return {
+        paths: dynamicPaths,
+        fallback: "blocking",
+    }
+}
+
+const EventDetailPage = ({ event }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     if (!event) {
-        <p>No event found !!!</p>
+        <p className="center">Loading ...</p>
     }
 
     return (

@@ -41,28 +41,45 @@ const DUMMY_EVENTS: Event[] = [
   },
 ];
 
-export function getFeaturedEvents() {
-  return DUMMY_EVENTS.filter((event) => event.isFeatured);
+export async function getAllEvents() {
+  const response = await fetch("https://nextjs-course-f2040-default-rtdb.firebaseio.com/events.json");
+  const data = await response.json();
+
+  const events = []
+
+  for (const key in data) {
+    events.push({
+      id: key,
+      ...data[key],
+    });
+  }
+
+  return events;
 }
 
-export function getAllEvents() {
-  return DUMMY_EVENTS;
+export async function getFeaturedEvents() {
+  const allEvents = await getAllEvents();
+
+  return allEvents.filter((event) => event.isFeatured);
 }
 
-export function getFilteredEvents(dateFilter: {
-    year: number
-    month: number
-}) {
+export async function getEventById(id: string) {
+  const allEvents = await getAllEvents();
+
+  return allEvents.find((event) => event.id === id);
+}
+
+export async function getFilteredEvents(dateFilter: { year: number; month: number }) {
   const { year, month } = dateFilter;
 
-  let filteredEvents = DUMMY_EVENTS.filter((event) => {
+  const allEvents = await getAllEvents();
+
+  let filteredEvents = allEvents.filter((event) => {
     const eventDate = new Date(event.date);
-    return eventDate.getFullYear() === year && eventDate.getMonth() === month - 1;
+    return (
+      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
+    );
   });
 
   return filteredEvents;
-}
-
-export function getEventById(id: string) {
-    return DUMMY_EVENTS.find((event) => event.id === id);
 }
