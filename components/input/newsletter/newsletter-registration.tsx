@@ -1,7 +1,7 @@
 import classes from './newsletter-registration.module.css';
 
-function NewsletterRegistration() {
-  function registrationHandler(event) {
+export function NewsletterRegistration() {
+  function registrationHandler(event: any) {
     event.preventDefault();
 
     // fetch user input (state or refs)

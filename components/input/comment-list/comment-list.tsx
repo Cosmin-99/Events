@@ -1,21 +1,20 @@
 import classes from './comment-list.module.scss';
+import useSWR from "swr";
+import { getComments } from '../../../services/comment';
 
 export function CommentList() {
+
+  const { data: comments } = useSWR("/api/comments", getComments)
+
   return (
     <ul className={classes.comments}>
-      {/* Render list of comments - fetched from API */}
-      <li>
-        <p>My comment is amazing!</p>
+     {comments?.map((el) => (
+      <li key={el.id}>
+        <p>{el.text}</p>
         <div>
-          By <address>Maximilian</address>
+          By <address>{el.name}</address>
         </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
+      </li>))}
     </ul>
   );
 }

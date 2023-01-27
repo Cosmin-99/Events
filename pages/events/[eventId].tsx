@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import EventContent from "../../components/events/event-detail/event-content/event-content";
 import EventLogistics from "../../components/events/event-detail/event-logistic/event-logistics";
 import EventSummary from "../../components/events/event-detail/event-summary/event-summary";
+import { Comments } from "../../components/input/comments/comments";
 import { Event, getEventById, getFeaturedEvents } from "../../utils/utils";
 
 export const getStaticProps: GetStaticProps<{ event?: Event }> = async (context) => {
@@ -43,6 +44,7 @@ const EventDetailPage = ({ event }: InferGetStaticPropsType<typeof getStaticProp
             <EventContent>
                 <p>{event?.description}</p>
             </EventContent>
+            <Comments eventId={event?.id} />
         </Fragment>
     )
 }

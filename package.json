@@ -9,13 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nearform/sql": "^1.10.0",
     "next": "13.0.6",
+    "pg": "^8.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sass": "^1.56.2"
+    "sass": "^1.56.2",
+    "swr": "^2.0.2"
   },
   "devDependencies": {
     "@types/node": "18.11.11",
+    "@types/pg": "^8.6.6",
     "@types/react": "18.0.26",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
