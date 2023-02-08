@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { databaseConnection } from "../../server";
+import { databaseConnection } from "../../../server";
 import SQL from "@nearform/sql";
+import { Event } from "../../../utils/utils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const sql = SQL`SELECT * FROM events`;
+    const sql = SQL`SELECT * FROM events WHERE isfeatured = true`;
 
     const response = await databaseConnection.query(sql)
 
-    res.status(200).json(response.rows);
+    res.status(200).json(response.rows as Event[]);
 }

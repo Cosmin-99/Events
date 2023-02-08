@@ -2,7 +2,8 @@ import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Router, { useRouter } from "next/router";
 import { EventList } from "../../components/events/event-list/event-list";
 import EventsSearch from "../../components/events/event-search/events-search";
-import { Event, getAllEvents } from "../../utils/utils";
+import { getAllEvents } from "../../services/events";
+import { Event } from "../../utils/utils";
 
 export const getStaticProps: GetStaticProps<{ events: Event[] }> = async () => {
     const allEvents = await getAllEvents();

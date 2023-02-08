@@ -1,6 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { EventList } from "../components/events/event-list/event-list";
-import { getFeaturedEvents, Event } from "../utils/utils";
+import { getFeaturedEvents } from "../services/events";
+import { Event } from "../utils/utils";
 
 export const getStaticProps: GetStaticProps<{ events: Event[] }> = async () => {
 

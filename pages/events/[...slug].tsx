@@ -1,7 +1,8 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { EventList } from "../../components/events/event-list/event-list";
-import { Event, getFilteredEvents } from "../../utils/utils";
+import { getFilteredEvents } from "../../services/events";
+import { Event } from "../../utils/utils";
 
 export const getServerSideProps: GetServerSideProps<{ events: Event[] }> = async (context) => {
 

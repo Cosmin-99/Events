@@ -4,7 +4,8 @@ import EventContent from "../../components/events/event-detail/event-content/eve
 import EventLogistics from "../../components/events/event-detail/event-logistic/event-logistics";
 import EventSummary from "../../components/events/event-detail/event-summary/event-summary";
 import { Comments } from "../../components/input/comments/comments";
-import { Event, getEventById, getFeaturedEvents } from "../../utils/utils";
+import { getEventById, getFeaturedEvents } from "../../services/events";
+import { Event } from "../../utils/utils";
 
 export const getStaticProps: GetStaticProps<{ event?: Event }> = async (context) => {
     const eventId = context?.params?.eventId as string;
